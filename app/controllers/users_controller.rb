@@ -8,7 +8,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(params[:user])
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to @client
+    else
+      render "new"
+    end
   end
 
   private
@@ -25,4 +30,17 @@ class UsersController < ApplicationController
       :password_hint
     )
   end
+
+  def self.check_name(my_data)
+    temp = my_data.downcase.split(' ')
+    temp.each_with_index do |a|
+      if a.length >= 3
+        if a[0,1] != "d"
+          a.capitalize!
+        end
+      end
+    end
+    temp.join(' ')
+  end
 end
+

@@ -1,13 +1,16 @@
 <h1>Sign up!</h1>
 
-<!--
-<div class="errors">
-  <ul>
-    <li>One error</li>
-    <li>Another error</li>
-  </ul>
-</div>
--->
+<% if @user.errors.any? %>
+  <div class="errors">
+    <h2><%= pluralize(@user.errors.count, "error") %> omissions stopped the user creation</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 
 <%= form_for(@user) do |f| %>
   <ul>
@@ -38,12 +41,12 @@
 
     <li>
       <%= f.label          :password %>
-      <%= f.password_field :password %>
+      <%= f.text_field :password %>
     </li>
 
     <li>
       <%= f.label          :password_confirmation %>
-      <%= f.password_field :password_confirmation %>
+      <%= f.text_field :password_confirmation %>
     </li>
 
     <li>
